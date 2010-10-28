@@ -1,4 +1,4 @@
-package Throwable::X::WithIdent;
+package Role::Identifiable::HasIdent;
 use Moose::Role;
 # ABSTRACT: a thing with an ident attribute
 
@@ -9,14 +9,11 @@ stores a simple string, meant to identify exceptions.
 
 =cut
 
-use Throwable::X::Types;
-
-use namespace::clean -except => 'meta';
-
 has ident => (
   is  => 'ro',
-  isa => 'Throwable::X::_Ident',
+  isa => 'Str',
   required => 1,
 );
 
+no Moose::Role;
 1;

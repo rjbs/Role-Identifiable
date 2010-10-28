@@ -1,8 +1,8 @@
-package Throwable::X::WithTags;
+package Role::Identifiable::HasTags;
 use Moose::Role;
 # ABSTRACT: a thing with a list of tags
 
-use namespace::clean -except => 'meta';
+use Moose::Util::TypeConstraints;
 
 sub has_tag {
   my ($self, $tag) = @_;
@@ -22,9 +22,11 @@ sub tags {
   return wantarray ? keys %tags : (keys %tags)[0];
 }
 
+subtype 'Role::Identifiable::_Tag', as 'Str', where { length };
+
 has instance_tags => (
   is     => 'ro',
-  isa    => 'ArrayRef[Throwable::X::_Tag]',
+  isa    => 'ArrayRef[Role::Identifiable::_Tag]',
   reader => '_instance_tags',
   init_arg => 'tags',
   default  => sub { [] },
@@ -54,4 +56,6 @@ sub _build_default_tags {
   return \@tags;
 }
 
+no Moose::Util::TypeConstraints;
+no Moose::Role;
 1;
