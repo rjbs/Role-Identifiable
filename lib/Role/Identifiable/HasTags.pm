@@ -2,6 +2,16 @@ package Role::Identifiable::HasTags;
 use Moose::Role;
 # ABSTRACT: a thing with a list of tags
 
+=head1 OVERVIEW
+
+This role adds the ability for your class and its composed parts (roles,
+superclasses) as well as instances of it to contribute to a pool of tags
+describing each instance.
+
+The behavior of this role is not yet very stable.  Do not rely on it yet.
+
+=cut
+
 use Moose::Util::TypeConstraints;
 
 sub has_tag {
