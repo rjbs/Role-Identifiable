@@ -1,5 +1,11 @@
 package Role::Identifiable::HasTags;
-use Moose::Role;
+
+use Type::Utils -all;
+use Types::Standard qw(Str ArrayRef);
+our $_Tag = declare 'Tag', as Str, where { length };
+
+
+use Moo::Role;
 # ABSTRACT: a thing with a list of tags
 
 =head1 OVERVIEW
@@ -12,7 +18,6 @@ The behavior of this role is not yet very stable.  Do not rely on it yet.
 
 =cut
 
-use Moose::Util::TypeConstraints;
 
 sub has_tag {
   my ($self, $tag) = @_;
@@ -32,11 +37,9 @@ sub tags {
   return wantarray ? keys %tags : (keys %tags)[0];
 }
 
-subtype 'Role::Identifiable::_Tag', as 'Str', where { length };
-
 has instance_tags => (
   is     => 'ro',
-  isa    => 'ArrayRef[Role::Identifiable::_Tag]',
+  isa    => ArrayRef[ $_Tag ],
   reader => '_instance_tags',
   init_arg => 'tags',
   default  => sub { [] },
@@ -66,6 +69,8 @@ sub _build_default_tags {
   return \@tags;
 }
 
-no Moose::Util::TypeConstraints;
-no Moose::Role;
+no Moo::Role;
+no Type::Utils;
+no Types::Standard;
+
 1;

@@ -1,5 +1,8 @@
 package Role::Identifiable::HasIdent;
-use Moose::Role;
+
+use Types::Standard qw(Str);
+use Type::Utils qw(declare as where);
+use Moo::Role;
 # ABSTRACT: a thing with an ident attribute
 
 =head1 DESCRIPTION
@@ -12,14 +15,13 @@ with whitespace.
 
 =cut
 
-use Moose::Util::TypeConstraints;
-
 has ident => (
   is  => 'ro',
-  isa => subtype('Str', where { length && /\A\S/ && /\S\z/ }),
+  isa => declare(as Str, where { length && /\A\S/ && /\S\z/ }),
   required => 1,
 );
 
-no Moose::Role;
-use Moose::Util::TypeConstraints;
+no Moo::Role;
+no Types::Standard;
+no Type::Utils;
 1;
