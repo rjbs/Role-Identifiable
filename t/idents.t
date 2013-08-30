@@ -31,4 +31,19 @@ use Test::More;
   );
 }
 
+{
+  for my $test (
+    [ defined  => undef ],
+    [ nonempty => '' ],
+    [ 'non-left padded'  => ' ident' ],
+    [ 'non-right padded' => 'ident ' ],
+    [ 'non-floating'     => ' floating ' ],
+  ) {
+    ok(
+      ! eval { Some::Identifiable->new({ ident => $test->[1] }); 1 },
+      "ident must be $test->[0]",
+    );
+  }
+}
+
 done_testing;
