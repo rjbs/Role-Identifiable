@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.007     2013-10-15 22:18:31 America/New_York
+          update bugtracker and repo metadata
+
 0.006     2013-08-30 15:41:27 America/New_York
           [NOT QUITE BACKWARD COMPATIBLE]
           idents now have to be non-empty and can't start or end with spaces
