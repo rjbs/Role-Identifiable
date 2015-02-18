@@ -5,7 +5,7 @@ use Test::More;
 
 {
   package Some::Identifiable;
-  use Moose;
+  use Moo;
 
   with(qw(
     Role::Identifiable::HasTags
