@@ -51,19 +51,24 @@ has _default_tags => (
 );
 
 sub _build_default_tags {
-  # This code stolen happily from Moose::Object::BUILDALL -- rjbs, 2010-10-18
-
   # NOTE: we ask Perl if we even need to do this first, to avoid extra meta
   # level calls
   return [] unless $_[0]->can('x_tags');
 
   my @tags;
 
+  require Scalar::Util;
   my ($self, $params) = @_;
-  foreach my $method (
-    reverse Class::MOP::class_of($self)->find_all_methods_by_name('x_tags')
-  ) {
-    push @tags, $method->{code}->execute($self, $params);
+
+  # Logic derived from Moo's Method::Generate::BuildAll -- kentnl, 2015-02-18
+  # Note: either MRO::Compat or mro is loaded automatically by Moo
+  foreach my $class ( reverse @{ mro::get_linear_isa( Scalar::Util::blessed($_[0]) ) } ) {
+    my $code = do {
+      no strict;
+      *{ $class . '::x_tags' }{'CODE'}
+    };
+    next unless $code;
+    push @tags, $self->$code( $params );
   }
 
   return \@tags;
