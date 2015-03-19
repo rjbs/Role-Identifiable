@@ -21,5 +21,5 @@ has ident => (
 );
 
 no Moose::Role;
-use Moose::Util::TypeConstraints;
+no Moose::Util::TypeConstraints;
 1;
