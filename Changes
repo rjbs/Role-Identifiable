@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.008     2022-06-12 15:25:28-04:00 America/New_York
         - tweak some packaging information (author, etc)
         - add Role::Identifiable just to make life simpler
           ( https://github.com/rjbs/Role-Identifiable/issues/3 )
